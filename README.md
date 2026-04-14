@@ -63,22 +63,3 @@ A Flask-based web interface allows users to:
 
 ---
 
-## 📁 Project Structure
-LOAN-RISK-PROJECT/
-│
-├── data/
-│ └── loan.csv
-│
-├── model/
-│ ├── label_encoders.pkl
-│ ├── model_classifier.pkl
-│ └── model_regressor.pkl
-│
-├── templates/
-│ └── index.html
-│
-├── app.py
-├── train.py
-├── requirements.txt
-└── README.md
-
