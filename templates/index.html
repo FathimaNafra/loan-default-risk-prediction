@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Loan AI System</title>
+
+<style>
+
+/* 🌐 Background */
+body{
+    margin:0;
+    font-family: Arial;
+    background: linear-gradient(135deg,#0f172a,#1e3a8a,#3b82f6);
+    min-height:100vh;
+}
+
+/* 🧾 Header */
+header{
+    text-align:center;
+    color:white;
+    font-size:26px;
+    padding:20px;
+    font-weight:bold;
+}
+
+/* 📦 Form container */
+.container{
+    width:650px;
+    margin:auto;
+}
+
+/* 🧊 Glass Card */
+.card{
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0px 10px 30px rgba(0,0,0,0.3);
+}
+
+/* 📌 Section title */
+.section{
+    color:#e0f2fe;
+    font-weight:bold;
+    margin-top:15px;
+    margin-bottom:10px;
+}
+
+/* 📥 Inputs */
+input, select{
+    width:100%;
+    padding:12px;
+    margin:6px 0;
+    border-radius:8px;
+    border:none;
+    outline:none;
+    background: rgba(255,255,255,0.15);
+    color:white;
+    font-size:14px;
+    transition:0.3s;
+}
+
+/* placeholder color */
+input::placeholder{
+    color:#dbeafe;
+}
+
+/* hover/focus effect */
+input:focus, select:focus{
+    background: rgba(255,255,255,0.25);
+    box-shadow:0px 0px 8px rgba(59,130,246,0.6);
+}
+
+/* 🚀 button */
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    background: linear-gradient(90deg,#22c55e,#16a34a);
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:bold;
+}
+
+button:hover{
+    transform:scale(1.03);
+}
+
+/* 📊 result box */
+.result{
+    margin-top:20px;
+    padding:15px;
+    border-radius:10px;
+    background: rgba(255,255,255,0.15);
+    color:white;
+    border-left:5px solid #22c55e;
+    font-weight:bold;
+}
+
+/* 📊 SHAP explanation container */
+.shap-container{
+    margin-top:25px;
+    padding:15px;
+    border-radius:10px;
+    background: rgba(255,255,255,0.1);
+    color:white;
+    border-left:5px solid #3b82f6;
+}
+
+.shap-container h3{
+    margin-top:0;
+    margin-bottom:15px;
+    font-size:16px;
+    color:#93c5fd;
+}
+
+.shap-image{
+    width:100%;
+    max-width:600px;
+    height:auto;
+    border-radius:8px;
+    background:white;
+    padding:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+💳 Loan Approval & Risk Prediction AI System
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<form action="/predict" method="post">
+
+<div class="section">📌 Basic Information</div>
+
+<input type="number" name="loan_id" placeholder="Loan ID (Example: 1)">
+
+<input type="number" name="no_of_dependents" placeholder="Number of Dependents">
+
+<select name="education">
+    <option value="0">Graduate</option>
+    <option value="1">Not Graduate</option>
+</select>
+
+<select name="self_employed">
+    <option value="0">Not Self Employed</option>
+    <option value="1">Self Employed</option>
+</select>
+
+<div class="section">💰 Financial Information</div>
+
+<input type="number" name="income_annum" placeholder="Annual Income">
+
+<input type="number" name="loan_amount" placeholder="Loan Amount">
+
+<input type="number" name="loan_term" placeholder="Loan Term (Months)">
+
+<input type="number" name="cibil_score" placeholder="CIBIL Score (300-900)">
+
+<div class="section">🏦 Assets Information</div>
+
+<input type="number" name="residential_assets_value" placeholder="Residential Assets">
+
+<input type="number" name="commercial_assets_value" placeholder="Commercial Assets">
+
+<input type="number" name="luxury_assets_value" placeholder="Luxury Assets">
+
+<input type="number" name="bank_asset_value" placeholder="Bank Assets">
+
+<button type="submit">Predict Loan</button>
+
+</form>
+
+{% if prediction_text %}
+<div class="result">
+{{ prediction_text }}
+</div>
+
+{% if clf_shap_plot %}
+<div class="shap-container">
+<h3>📊 Loan Approval Explainability (SHAP)</h3>
+<img src="{{ clf_shap_plot }}" alt="Classifier SHAP Plot" class="shap-image">
+</div>
+{% endif %}
+
+{% if reg_shap_plot %}
+<div class="shap-container">
+<h3>📊 Risk Score Explainability (SHAP)</h3>
+<img src="{{ reg_shap_plot }}" alt="Regressor SHAP Plot" class="shap-image">
+</div>
+{% endif %}
+
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>
